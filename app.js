@@ -6,7 +6,7 @@ $(function() {
         priceTotal = 0
     ;
 
-    $(document).on('click', '.notification', function() {
+    $(document).on('click', '.notification.removable', function() {
         $(this).remove();
     });
 
@@ -27,7 +27,7 @@ $(function() {
     });
 
     $('#js-custom-price').on('keyup', function() {
-        let value = parseFloat($(this).val());
+        let value = parseFloat($(this).val().replace(',', '.'));
 
         if (isNaN(value)) {
             return;
@@ -48,9 +48,10 @@ $(function() {
             $('#js-button-validate').attr('disabled', true);
             $('#js-custom-price').val('').attr('disabled', true);
             $('.js-button-qty, .js-button-price').removeClass('is-outlined');
+
+            notify('success', 'Bravo ! T\'as encore bu une bière !');
         }).catch(function() {
-            // add notif, permission denied
-            addNotif('danger', 'Login first');
+            notify('danger', 'Tu dois te connecter avant !');
         });
     });
 
@@ -65,9 +66,9 @@ $(function() {
 
     $('#js-facebook-logout').on('click', function() {
         firebase.auth().signOut().then(function() {
-            addNotif('success', 'Logged out');
+            notify('success', 'Bravo t\'es déconnecté ! Champion !');
         }).catch(function(error) {
-            addNotif('danger', 'Error while logging out');
+            notify('danger', 'Hmm... Y\'a eu une erreur pendant la déconnexion. Réssaye stp.');
             console.log(error);
         });
     });
@@ -82,6 +83,11 @@ $(function() {
         } else {
             $('#js-facebook-login').show();
             $('#js-facebook-logout').hide();
+
+            $('#app').prepend($('<div/>', {
+                'class': 'notification is-warning',
+                'text': 'Tu dois te connecter pour picoler. C\'est véridique hein !'
+            }));
         }
     });
 
@@ -97,11 +103,13 @@ $(function() {
         });
     }
 
-    function addNotif(type, content) {
-        $('.notification').remove();
+    function notify(type, content) {
+        $('.notification.removable').remove();
         $('#app').prepend($('<div/>', {
-            'class': 'notification is-'+type,
+            'class': 'notification removable is-'+type,
             'text': content
+        }).fadeOut(5000, function() {
+            $(this).remove();
         }));
     }
 });

@@ -1,53 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Beerometer</title>
+    <title>Bieromètre</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="bulma.min.css">
     <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<section id="app" class="section">
-    <div class="container">
+<section class="section">
+    <div id="app" class="container">
         <h1 class="title has-text-centered is-size-1">
             Bièromètre
-            <a id="js-facebook-login" class="button is-large is-info is-pulled-right" style="display: none">Login</a>
-            <a id="js-facebook-logout" class="button is-large is-danger is-pulled-right" style="display: none">Logout</a>
+            <a id="js-facebook-login" class="button is-large is-info is-pulled-left" style="display: none">Connexion</a>
+            <a id="js-facebook-logout" class="button is-large is-danger is-pulled-left" style="display: none">Déconnexion</a>
         </h1>
 
         <h2 class="title">Quantité</h2>
         <div class="columns">
-            <div class="column is-one-quarter">
-                <button class="js-button-qty button is-large is-danger" data-qty="50">50cl</button>
+            <div class="column is-one-fifth">
+                <button class="js-button-qty button is-large is-danger button-full" data-qty="100">1L</button>
             </div>
-            <div class="column is-one-quarter">
-                <button class="js-button-qty button is-large is-info" data-qty="33">33cl</button>
+            <div class="column is-one-fifth">
+                <button class="js-button-qty button is-large is-danger button-full" data-qty="50">50cl</button>
             </div>
-            <div class="column is-one-quarter">
-                <button class="js-button-qty button is-large is-primary" data-qty="25">25cl</button>
+            <div class="column is-one-fifth">
+                <button class="js-button-qty button is-large is-info button-full" data-qty="33">33cl</button>
             </div>
-            <div class="column is-one-quarter">
-                <button class="js-button-qty button is-large is-primary" data-qty="12.5">12.5cl</button>
+            <div class="column is-one-fifth">
+                <button class="js-button-qty button is-large is-primary button-full" data-qty="25">25cl</button>
+            </div>
+            <div class="column is-one-fifth">
+                <button class="js-button-qty button is-large is-primary button-full" data-qty="12.5">12.5cl</button>
             </div>
         </div>
         <h2 class="title">Prix</h2>
         <div id="prices">
             <div class="columns">
-                <div class="column is-one-fifth">
-                    <button class="js-button-price button is-large is-danger" disabled data-price="6.5">6,5€</button>
+                <div class="column is-2">
+                    <button class="js-button-price button is-large is-danger button-full" disabled data-price="9">9€</button>
                 </div>
-                <div class="column is-one-fifth">
-                    <button class="js-button-price button is-large is-info" disabled data-price="5">5€</button>
+                <div class="column is-2">
+                    <button class="js-button-price button is-large is-danger button-full" disabled data-price="6.5">6,5€</button>
                 </div>
-                <div class="column is-one-fifth">
-                    <button class="js-button-price button is-large is-info" disabled data-price="4">4€</button>
+                <div class="column is-2">
+                    <button class="js-button-price button is-large is-info button-full" disabled data-price="5">5€</button>
                 </div>
-                <div class="column is-one-fifth">
-                    <button class="js-button-price button is-large is-info" disabled data-price="3.9">3,9€</button>
+                <div class="column is-2">
+                    <button class="js-button-price button is-large is-info button-full" disabled data-price="4">4€</button>
                 </div>
-                <div class="column is-one-fifth">
-                    <button class="js-button-price button is-large is-primary" disabled data-price="3.5">3,5€</button>
+                <div class="column is-2">
+                    <button class="js-button-price button is-large is-info button-full" disabled data-price="3.9">3,9€</button>
+                </div>
+                <div class="column is-2">
+                    <button class="js-button-price button is-large is-primary button-full" disabled data-price="3.5">3,5€</button>
                 </div>
             </div>
             <div class="columns">
@@ -69,17 +76,17 @@
         <div class="field is-grouped is-grouped-multiline">
             <div class="control">
                 <div class="tags has-addons">
-                    <span class="tag is-large is-dark">Quantité</span>
-                    <span class="tag is-large is-success">
+                    <span class="tag is-large is-dark is-size-3">Quantité</span>
+                    <span class="tag is-large is-success is-size-3">
                         <span id="js-total-qty"></span>cl
                     </span>
                 </div>
             </div>
             <div class="control">
                 <div class="tags has-addons">
-                    <span class="tag is-large is-dark">Prix</span>
-                    <span class="tag is-large is-danger">
-                        <span id="js-total-price"></span> €
+                    <span class="tag is-large is-dark is-size-3">Prix</span>
+                    <span class="tag is-large is-danger is-size-3">
+                        <span id="js-total-price"></span>€
                     </span>
                 </div>
             </div>
