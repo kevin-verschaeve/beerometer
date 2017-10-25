@@ -1,0 +1,11 @@
+#app {
+    position: relative;
+}
+button {
+    width: 100%;
+}
+.notification {
+    position: absolute;
+    right: 5%;
+    cursor: pointer;
+}

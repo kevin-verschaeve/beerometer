@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Beerometer</title>
+
+    <link rel="stylesheet" href="bulma.min.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+<section id="app" class="section">
+    <div class="container">
+        <h1 class="title has-text-centered is-size-1">
+            Bièromètre
+            <a id="js-facebook-login" class="button is-large is-info is-pulled-right" style="display: none">Login</a>
+            <a id="js-facebook-logout" class="button is-large is-danger is-pulled-right" style="display: none">Logout</a>
+        </h1>
+
+        <h2 class="title">Quantité</h2>
+        <div class="columns">
+            <div class="column is-one-quarter">
+                <button class="js-button-qty button is-large is-danger" data-qty="50">50cl</button>
+            </div>
+            <div class="column is-one-quarter">
+                <button class="js-button-qty button is-large is-info" data-qty="33">33cl</button>
+            </div>
+            <div class="column is-one-quarter">
+                <button class="js-button-qty button is-large is-primary" data-qty="25">25cl</button>
+            </div>
+            <div class="column is-one-quarter">
+                <button class="js-button-qty button is-large is-primary" data-qty="12.5">12.5cl</button>
+            </div>
+        </div>
+        <h2 class="title">Prix</h2>
+        <div id="prices">
+            <div class="columns">
+                <div class="column is-one-fifth">
+                    <button class="js-button-price button is-large is-danger" disabled data-price="6.5">6,5€</button>
+                </div>
+                <div class="column is-one-fifth">
+                    <button class="js-button-price button is-large is-info" disabled data-price="5">5€</button>
+                </div>
+                <div class="column is-one-fifth">
+                    <button class="js-button-price button is-large is-info" disabled data-price="4">4€</button>
+                </div>
+                <div class="column is-one-fifth">
+                    <button class="js-button-price button is-large is-info" disabled data-price="3.9">3,9€</button>
+                </div>
+                <div class="column is-one-fifth">
+                    <button class="js-button-price button is-large is-primary" disabled data-price="3.5">3,5€</button>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column field">
+                    <div class="control has-icons-left">
+                        <input id="js-custom-price" class="input is-large" placeholder="Autre prix..." disabled>
+                        <span class="icon is-left">€</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <button id="js-button-validate" class="button is-large is-success" disabled>Valider</button>
+            </div>
+        </div>
+
+        <h2 class="title">Total</h2>
+        <div class="field is-grouped is-grouped-multiline">
+            <div class="control">
+                <div class="tags has-addons">
+                    <span class="tag is-large is-dark">Quantité</span>
+                    <span class="tag is-large is-success">
+                        <span id="js-total-qty"></span>cl
+                    </span>
+                </div>
+            </div>
+            <div class="control">
+                <div class="tags has-addons">
+                    <span class="tag is-large is-dark">Prix</span>
+                    <span class="tag is-large is-danger">
+                        <span id="js-total-price"></span> €
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="jquery-3.2.1.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-auth.js"></script>
+<script>
+    // Initialize Firebase
+    var app = firebase.initializeApp({
+        apiKey: "AIzaSyC1aA3bPn2OyTSiXJL0gJPjNzi0J_glOMo",
+        authDomain: "beerometer-4d8d6.firebaseapp.com",
+        databaseURL: "https://beerometer-4d8d6.firebaseio.com",
+        projectId: "beerometer-4d8d6",
+        storageBucket: "",
+        messagingSenderId: "474385233655"
+    });
+    var db = app.database();
+</script>
+<script src="app.js"></script>
+</body>
+</html>
