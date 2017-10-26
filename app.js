@@ -94,12 +94,14 @@ $(function() {
     });
 
     function handleData() {
-        db.ref('/users/'+userId).on('child_added', function(data) {
+        db.ref('/users/'+userId).orderByChild('date').on('child_added', function(data) {
             let beer = data.val();
 
             qtyTotal += beer.qty;
             priceTotal += beer.price;
             ++count;
+
+            addHistoryRow(beer);
 
             $('#js-total-count').text(count);
             $('#js-total-qty').text(qtyTotal);
@@ -115,5 +117,15 @@ $(function() {
         }).fadeOut(5000, function() {
             $(this).remove();
         }));
+    }
+
+    function addHistoryRow(beer) {
+        let $row = $('<tr/>');
+        $row
+            .append($('<td/>', {text: beer.qty}))
+            .append($('<td/>', {text: beer.price}))
+            .append($('<td/>', {text: (new Date(beer.date)).toLocaleString()}))
+        ;
+        $('#history-table').append($row);
     }
 });
