@@ -2,6 +2,7 @@ $(function() {
     let qty,
         price,
         userId,
+        count = 0,
         qtyTotal = 0,
         priceTotal = 0
     ;
@@ -97,7 +98,9 @@ $(function() {
 
             qtyTotal += beer.qty;
             priceTotal += beer.price;
+            ++count;
 
+            $('#js-total-count').text(count);
             $('#js-total-qty').text(qtyTotal);
             $('#js-total-price').text(priceTotal);
         });
