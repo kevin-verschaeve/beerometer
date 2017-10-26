@@ -41,7 +41,8 @@ $(function() {
     $('#js-button-validate').on('click', function(e) {
         let data = {
             "qty": qty,
-            "price": price
+            "price": price,
+            "date": Date.now()
         };
 
         db.ref('users/'+userId).push(data).then(function() {
