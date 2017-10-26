@@ -6,7 +6,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="bulma.min.css">
-    <link rel="stylesheet" href="app.css">
+    <style>
+        .notification.removable { cursor: pointer; }
+    </style>
 </head>
 <body>
 <section class="section">
@@ -20,41 +22,41 @@
         <h2 class="title">Quantité</h2>
         <div class="columns">
             <div class="column is-one-fifth">
-                <button class="js-button-qty button is-large is-danger button-full" data-qty="100">1L</button>
+                <button class="js-button-qty button is-large is-danger is-fullwidth button-full" data-qty="100">1L</button>
             </div>
             <div class="column is-one-fifth">
-                <button class="js-button-qty button is-large is-danger button-full" data-qty="50">50cl</button>
+                <button class="js-button-qty button is-large is-danger is-fullwidth button-full" data-qty="50">50cl</button>
             </div>
             <div class="column is-one-fifth">
-                <button class="js-button-qty button is-large is-info button-full" data-qty="33">33cl</button>
+                <button class="js-button-qty button is-large is-info is-fullwidth button-full" data-qty="33">33cl</button>
             </div>
             <div class="column is-one-fifth">
-                <button class="js-button-qty button is-large is-primary button-full" data-qty="25">25cl</button>
+                <button class="js-button-qty button is-large is-primary is-fullwidth button-full" data-qty="25">25cl</button>
             </div>
             <div class="column is-one-fifth">
-                <button class="js-button-qty button is-large is-primary button-full" data-qty="12.5">12,5cl</button>
+                <button class="js-button-qty button is-large is-primary is-fullwidth button-full" data-qty="12.5">12,5cl</button>
             </div>
         </div>
         <h2 class="title">Prix</h2>
         <div id="prices">
             <div class="columns">
                 <div class="column is-2">
-                    <button class="js-button-price button is-large is-danger button-full" disabled data-price="9">9€</button>
+                    <button class="js-button-price button is-large is-danger is-fullwidth button-full" disabled data-price="9">9€</button>
                 </div>
                 <div class="column is-2">
-                    <button class="js-button-price button is-large is-danger button-full" disabled data-price="6.5">6,5€</button>
+                    <button class="js-button-price button is-large is-danger is-fullwidth button-full" disabled data-price="6.5">6,5€</button>
                 </div>
                 <div class="column is-2">
-                    <button class="js-button-price button is-large is-info button-full" disabled data-price="5">5€</button>
+                    <button class="js-button-price button is-large is-info is-fullwidth button-full" disabled data-price="5">5€</button>
                 </div>
                 <div class="column is-2">
-                    <button class="js-button-price button is-large is-info button-full" disabled data-price="4">4€</button>
+                    <button class="js-button-price button is-large is-info is-fullwidth button-full" disabled data-price="4">4€</button>
                 </div>
                 <div class="column is-2">
-                    <button class="js-button-price button is-large is-info button-full" disabled data-price="3.9">3,9€</button>
+                    <button class="js-button-price button is-large is-info is-fullwidth button-full" disabled data-price="3.9">3,9€</button>
                 </div>
                 <div class="column is-2">
-                    <button class="js-button-price button is-large is-primary button-full" disabled data-price="3.5">3,5€</button>
+                    <button class="js-button-price button is-large is-primary is-fullwidth button-full" disabled data-price="3.5">3,5€</button>
                 </div>
             </div>
             <div class="columns">
@@ -68,7 +70,7 @@
         </div>
         <div class="columns">
             <div class="column">
-                <button id="js-button-validate" class="button is-large is-success" disabled>Valider</button>
+                <button id="js-button-validate" class="button is-large is-success is-fullwidth" disabled>Valider</button>
             </div>
         </div>
 
