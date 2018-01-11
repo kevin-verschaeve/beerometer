@@ -1,6 +1,6 @@
 $(function() {
-    let qty,
-        price,
+    let qty = $('#js-select-qty').val(),
+        price = $('#price-range').val(),
         userId,
         count = 0,
         qtyTotal = 0,
@@ -11,44 +11,30 @@ $(function() {
         $(this).remove();
     });
 
-    $('.js-button-qty').on('click', function(e) {
-        e.preventDefault();
-        qty = $(this).data('qty');
-        $("[disabled]", '#prices').removeAttr('disabled');
-        $('.js-button-qty').removeClass('is-outlined');
-        $(this).addClass('is-outlined');
-    });
+    /*
+     * Slider
+     */
+    $('#price-range')
+        .on('input', function() {
+            $('#price-value').text($(this).val());
+        })
+        .on('change', function () {
+            price = $(this).val();
+        })
+    ;
 
-    $('.js-button-price').on('click', function(e) {
-        e.preventDefault();
-        price = $(this).data('price');
-        $('#js-button-validate').removeAttr('disabled');
-        $('.js-button-price').removeClass('is-outlined');
-        $(this).addClass('is-outlined');
-    });
-
-    $('#js-custom-price').on('keyup', function() {
-        let value = parseFloat($(this).val().replace(',', '.'));
-
-        if (isNaN(value)) {
-            return;
-        }
-
-        price = value;
-        $('#js-button-validate').removeAttr('disabled');
+    $('#js-select-qty').on('change', function() {
+        qty = $(this).val();
     });
 
     $('#js-button-validate').on('click', function(e) {
         let data = {
-            "qty": qty,
-            "price": price,
+            "qty": parseFloat(qty),
+            "price": parseFloat(price),
             "date": Date.now()
         };
 
         db.ref('users/'+userId).push(data).then(function() {
-            $('.js-button-price', '#prices').attr('disabled', true);
-            $('#js-button-validate').attr('disabled', true);
-            $('#js-custom-price').val('').attr('disabled', true);
             $('.js-button-qty, .js-button-price').removeClass('is-outlined');
 
             notify('success', 'Bravo ! T\'as encore bu une bière !');

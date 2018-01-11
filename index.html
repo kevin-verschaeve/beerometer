@@ -6,9 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="bulma.min.css">
-    <style>
-        .notification.removable { cursor: pointer; }
-    </style>
+    <link rel="stylesheet" href="app.css">
 </head>
 <body>
 <section class="section">
@@ -19,86 +17,43 @@
             <a id="js-facebook-logout" class="button is-large is-danger is-pulled-left" style="display: none">Déconnexion</a>
         </h1>
 
-        <h2 class="title">Quantité</h2>
         <div class="columns">
-            <div class="column is-one-fifth">
-                <button class="js-button-qty button is-large is-danger is-fullwidth button-full" data-qty="100">1L</button>
-            </div>
-            <div class="column is-one-fifth">
-                <button class="js-button-qty button is-large is-danger is-fullwidth button-full" data-qty="50">50cl</button>
-            </div>
-            <div class="column is-one-fifth">
-                <button class="js-button-qty button is-large is-info is-fullwidth button-full" data-qty="33">33cl</button>
-            </div>
-            <div class="column is-one-fifth">
-                <button class="js-button-qty button is-large is-primary is-fullwidth button-full" data-qty="25">25cl</button>
-            </div>
-            <div class="column is-one-fifth">
-                <button class="js-button-qty button is-large is-primary is-fullwidth button-full" data-qty="12.5">12,5cl</button>
-            </div>
-        </div>
-        <h2 class="title">Prix</h2>
-        <div id="prices">
-            <div class="columns">
-                <div class="column is-2">
-                    <button class="js-button-price button is-large is-danger is-fullwidth button-full" disabled data-price="9">9€</button>
-                </div>
-                <div class="column is-2">
-                    <button class="js-button-price button is-large is-danger is-fullwidth button-full" disabled data-price="6.5">6,5€</button>
-                </div>
-                <div class="column is-2">
-                    <button class="js-button-price button is-large is-info is-fullwidth button-full" disabled data-price="5">5€</button>
-                </div>
-                <div class="column is-2">
-                    <button class="js-button-price button is-large is-info is-fullwidth button-full" disabled data-price="4">4€</button>
-                </div>
-                <div class="column is-2">
-                    <button class="js-button-price button is-large is-info is-fullwidth button-full" disabled data-price="3.9">3,9€</button>
-                </div>
-                <div class="column is-2">
-                    <button class="js-button-price button is-large is-primary is-fullwidth button-full" disabled data-price="3.5">3,5€</button>
+            <div class="column is-4">
+                <h2 class="title">Quantité</h2>
+                <div class="field">
+                    <div class="control">
+                        <div class="select is-primary is-large is-fullwidth">
+                            <select id="js-select-qty" class="is-fullwidth">
+                                <option value="12.5">12,5cl</option>
+                                <option value="25">25cl</option>
+                                <option value="33">33cl</option>
+                                <option value="50" selected>50cl</option>
+                                <option value="75">75cl</option>
+                                <option value="100">1L</option>
+                                <option value="150">1,5L</option>
+                                <option value="200">2L</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="columns">
-                <div class="column field">
-                    <div class="control has-icons-left">
-                        <input id="js-custom-price" class="input is-large" placeholder="Autre prix..." disabled>
-                        <span class="icon is-left">€</span>
+            <div class="column is-8">
+                <h2 class="title">Prix</h2>
+                <div class="columns">
+                    <div class="column is-10 is-flex">
+                        <input id="price-range" type="range" min="0" max="20" step="0.5" value="5">
+                    </div>
+                    <div class="column is-2">
+                        <div class="tile is-primary is-parent notification is-flex is-size-4">
+                            <span id="price-value">5</span>€
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="columns">
             <div class="column">
-                <button id="js-button-validate" class="button is-large is-success is-fullwidth" disabled>Valider</button>
-            </div>
-        </div>
-
-        <h2 class="title">Total</h2>
-        <div class="field is-grouped is-grouped-multiline">
-            <div class="control">
-                <div class="tags has-addons">
-                    <span class="tag is-large is-dark is-size-3">Verres</span>
-                    <span class="tag is-large is-success is-size-3">
-                        <span id="js-total-count"></span>
-                    </span>
-                </div>
-            </div>
-            <div class="control">
-                <div class="tags has-addons">
-                    <span class="tag is-large is-dark is-size-3">Quantité</span>
-                    <span class="tag is-large is-success is-size-3">
-                        <span id="js-total-qty"></span>cl
-                    </span>
-                </div>
-            </div>
-            <div class="control">
-                <div class="tags has-addons">
-                    <span class="tag is-large is-dark is-size-3">Prix</span>
-                    <span class="tag is-large is-danger is-size-3">
-                        <span id="js-total-price"></span>€
-                    </span>
-                </div>
+                <button id="js-button-validate" class="button is-large is-success is-fullwidth">Valider</button>
             </div>
         </div>
     </div>
@@ -106,9 +61,9 @@
 
 <section class="section">
     <div class="container">
-        <h2 class="title">Historique</h2>
         <div class="columns">
             <div class="column is-6">
+                <h2 class="title">Historique</h2>
                 <table class="table is-striped is-fullwidth">
                     <thead>
                         <tr>
@@ -119,6 +74,35 @@
                     </thead>
                     <tbody id="history-table"></tbody>
                 </table>
+            </div>
+            <div class="column is-6">
+                <h2 class="title">Total</h2>
+                <div class="field is-grouped-multiline">
+                    <div class="control">
+                        <div class="tags has-addons">
+                            <span class="tag is-large is-dark is-size-3 tag-label is-radiusless is-marginless">Verres</span>
+                            <span class="tag is-large is-success is-size-3 tag-value is-radiusless is-marginless">
+                                <span id="js-total-count">0</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <div class="tags has-addons">
+                            <span class="tag is-large is-dark is-size-3 tag-label is-radiusless is-marginless">Quantité</span>
+                            <span class="tag is-large is-success is-size-3 tag-value is-radiusless is-marginless">
+                                <span id="js-total-qty">0</span>cl
+                            </span>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <div class="tags has-addons">
+                            <span class="tag is-large is-dark is-size-3 tag-label is-radiusless is-marginless">Prix</span>
+                            <span class="tag is-large is-danger is-size-3 tag-value is-radiusless is-marginless">
+                                <span id="js-total-price">0</span>€
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
