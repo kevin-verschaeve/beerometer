@@ -87,7 +87,7 @@ $(function() {
             priceTotal += beer.price;
             ++count;
 
-            addHistoryRow(beer);
+            addHistoryRow(beer, data.key);
 
             $('#js-total-count').text(count);
             $('#js-total-qty').text(qtyTotal);
@@ -105,13 +105,90 @@ $(function() {
         }));
     }
 
-    function addHistoryRow(beer) {
-        let $row = $('<tr/>');
+    function addHistoryRow(beer, uid) {
+        let $row = $('<tr/>', {'class': 'history-row'}),
+            $actionTd = $('<td/>', {'data-uid': uid, 'class': 'action-container'});
+
+        addLink($actionTd, 'edit');
+
         $row
-            .append($('<td/>', {text: beer.qty}))
-            .append($('<td/>', {text: beer.price}))
+            .append($('<td/>', {text: beer.qty, 'class': 'editable qty'}))
+            .append($('<td/>', {text: beer.price, 'class': 'editable price'}))
             .append($('<td/>', {text: (new Date(beer.date)).toLocaleString()}))
+            .append($actionTd)
         ;
+
         $('#history-table').append($row);
+    }
+
+    $(document).on('click', '.edit-beer', function(e) {
+        e.preventDefault();
+        resetActions();
+
+        let $row = $(this).closest('.history-row');
+
+        $('.editable', $row).each(function() {
+            $(this).append($('<input/>', {
+                value: $(this).text(),
+                'class': 'editor'
+            }));
+        });
+
+        addLink($(this).closest('td'), 'done');
+        $('.editor', $('.editable.price')).focus();
+    });
+
+    $(document).on('click', '.edit-done', function(e) {
+        e.preventDefault();
+
+        let $this = $(this),
+            $row = $this.closest('.history-row'),
+            newQty = parseFloat($('.qty.editable input', $row).val()),
+            newPrice = parseFloat($('.price.editable input', $row).val());
+
+        if (false === validate(newQty) || false === validate(newPrice)) {
+            notify('danger', 'Prix ou quantité invalide');
+            return;
+        }
+
+        db.ref('/users/'+userId+'/'+$this.data('uid')).update({
+            qty: newQty,
+            price: newPrice
+        });
+
+        addLink($this.closest('td'), 'edit');
+
+        $('.editor').remove();
+        $('.editable.qty', $row).text(newQty);
+        $('.editable.price', $row).text(newPrice);
+    });
+
+    $(document).on('keyup', '.editor', function (e) {
+        if (13 === e.keyCode) {
+            $('.edit-done', $(this).closest('.history-row')).click();
+        }
+    });
+
+    function addLink($container, type) {
+        $('.action', $container).remove();
+        $container.append($('<a/>', {
+            'class': 'action edit-' + (type === 'edit' ? 'beer' : 'done'),
+            href: '#',
+            text: (type === 'edit' ? 'Modifier' : 'Ok'),
+            'data-uid': $container.data('uid')
+        }));
+    }
+
+    function resetActions() {
+        $('.editor').remove();
+
+        $('.edit-done').each(function() {
+            let $actionTd = $('.action-container', $(this).closest('.history-row'));
+            addLink($actionTd, 'edit');
+        });
+    }
+
+    function validate(value) {
+        return '' !== value && undefined !== value && null !== value && false === isNaN(value) && value > 0;
     }
 });

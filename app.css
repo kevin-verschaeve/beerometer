@@ -1,4 +1,9 @@
 .notification.removable { cursor: pointer; }
+input.editor {
+    width: 50px;
+    margin-left: 20px;
+    padding: 5px;
+}
 
 /**
  * TAGS
