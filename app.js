@@ -98,7 +98,7 @@ $(function() {
     function notify(type, content) {
         $('.notification.removable').remove();
         $('#app').prepend($('<div/>', {
-            'class': 'notification removable is-'+type,
+            'class': 'notification fixed removable is-'+type,
             'text': content
         }).fadeOut(5000, function() {
             $(this).remove();
