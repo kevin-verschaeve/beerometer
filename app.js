@@ -4,7 +4,9 @@ $(function() {
         userId,
         count = 0,
         qtyTotal = 0,
-        priceTotal = 0
+        priceTotal = 0,
+        previousQty,
+        previousPrice
     ;
 
     $(document).on('click', '.notification.removable', function() {
@@ -28,13 +30,19 @@ $(function() {
     });
 
     $('#js-button-validate').on('click', function(e) {
+        if (typeof  userId === 'undefined') {
+            notify('danger','T\'es pas connecté !');
+
+            return;
+        }
+
         let data = {
             "qty": parseFloat(qty),
             "price": parseFloat(price),
             "date": Date.now()
         };
 
-        db.ref('users/'+userId).push(data).then(function() {
+        db.collection('/users').doc(userId).collection('beers').add(data).then(function() {
             $('.js-button-qty, .js-button-price').removeClass('is-outlined');
 
             notify('success', 'Bravo ! T\'as encore bu une bière !');
@@ -80,18 +88,27 @@ $(function() {
     });
 
     function handleData() {
-        db.ref('/users/'+userId).orderByChild('date').on('child_added', function(data) {
-            let beer = data.val();
+        db.collection('/users').doc(userId).collection('beers').orderBy('date').onSnapshot(function (snapshot) {
+            snapshot.docChanges().forEach(function(change) {
+                let beer = change.doc.data();
 
-            qtyTotal += beer.qty;
-            priceTotal += beer.price;
-            ++count;
+                if (change.type === "added") {
+                    qtyTotal += beer.qty;
+                    priceTotal += beer.price;
+                    ++count;
 
-            addHistoryRow(beer, data.key);
+                    addHistoryRow(beer, change.doc.id);
+                }
 
-            $('#js-total-count').text(count);
-            $('#js-total-qty').text(qtyTotal);
-            $('#js-total-price').text(priceTotal);
+                if (change.type === 'modified') {
+                    qtyTotal = parseInt($('#js-total-qty').text()) - previousQty + beer.qty;
+                    priceTotal = parseFloat($('#js-total-price').text()) - previousPrice + beer.price;
+                }
+
+                $('#js-total-count').text(count);
+                $('#js-total-qty').text(qtyTotal);
+                $('#js-total-price').text(priceTotal);
+            });
         });
     }
 
@@ -127,11 +144,15 @@ $(function() {
 
         let $row = $(this).closest('.history-row');
 
+        previousQty = parseInt($('.editable.qty', $row).text());
+        previousPrice = parseFloat($('.editable.price', $row).text());
+
         $('.editable', $row).each(function() {
             $(this).append($('<input/>', {
                 value: $(this).text(),
                 'class': 'editor'
             }));
+
         });
 
         addLink($(this).closest('td'), 'done');
@@ -151,10 +172,10 @@ $(function() {
             return;
         }
 
-        db.ref('/users/'+userId+'/'+$this.data('uid')).update({
+        db.collection('/users').doc(userId).collection('beers').doc($this.data('uid')).set({
             qty: newQty,
             price: newPrice
-        });
+        }, {merge: true});
 
         addLink($this.closest('td'), 'edit');
 
