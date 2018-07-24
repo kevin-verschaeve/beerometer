@@ -93,6 +93,7 @@ $(function() {
                 let beer = change.doc.data();
 
                 if (change.type === "added") {
+                    $('#js-loading-history').remove();
                     qtyTotal += beer.qty;
                     priceTotal += beer.price;
                     ++count;
@@ -109,6 +110,14 @@ $(function() {
                 $('#js-total-qty').text(qtyTotal);
                 $('#js-total-price').text(priceTotal);
             });
+
+            if (snapshot.empty) {
+                $('#js-loading-history').html($('<td/>', {
+                    text: 'Et qu\'est-ce t\'attend pour boire ?',
+                    colspan: 4,
+                    'class': 'has-text-centered'
+                }));
+            }
         });
     }
 
