@@ -1,0 +1,82 @@
+{
+    "Beerometer": {
+        "en": "Beerometer",
+        "fr": "Bièromètre"
+    },
+    "login": {
+       "en": "Login",
+        "fr": "Connexion"
+    },
+    "logout": {
+        "en": "Logout",
+        "fr": "Déconnexion"
+    },
+    "quantity": {
+        "en": "Quantity",
+        "fr": "Quantité"
+    },
+    "price": {
+        "en": "Price",
+        "fr": "Prix"
+    },
+    "submit": {
+        "en": "Submit",
+        "fr": "Valider"
+    },
+    "history": {
+        "en": "History",
+        "fr": "Historique"
+    },
+    "date": {
+        "en": "Date",
+        "fr": "Date"
+    },
+    "actions": {
+        "en": "Actions",
+        "fr": "Actions"
+    },
+    "total": {
+        "en": "Total",
+        "fr": "Total"
+    },
+    "glasses": {
+        "en": "Glasses",
+        "fr": "Verres"
+    },
+    "edit": {
+        "en": "Edit",
+        "fr": "Modifier"
+    },
+    "ok": {
+        "en": "Ok",
+        "fr": "Ok"
+    },
+    "message.not_logged": {
+        "en": "You're not logged in!",
+        "fr": "T'es pas connecté !"
+    },
+    "message.success_add": {
+        "en": "Congratulations! You've drink another beer!",
+        "fr": "Bravo ! T'as encore bu une bière !"
+    },
+    "message.success_logout": {
+        "en": "Congratulations! You're logged out!",
+        "fr": "Bravo t'es déconnecté !"
+    },
+    "message.error_logout": {
+        "en": "Hmm... An error occured while logging out. Please try again.!",
+        "fr": "Hmm... Y'a eu une erreur pendant la déconnexion. Réssaye stp."
+    },
+    "message.alert_not_logged": {
+        "en": "You must be logged in to drink. True story bro!",
+        "fr": "Tu dois te connecter pour picoler. C'est véridique hein !"
+    },
+    "message.empty_history": {
+        "en": "And what are you waiting to drink?",
+        "fr": "Et qu'est-ce t'attend pour boire ?"
+    },
+    "message.invalid_date": {
+        "en": "Invalid price or quantity",
+        "fr": "Prix ou quantité invalide"
+    }
+}

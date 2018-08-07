@@ -6,7 +6,8 @@ $(function() {
         qtyTotal = 0,
         priceTotal = 0,
         previousQty,
-        previousPrice
+        previousPrice,
+        translator
     ;
 
     $(document).on('click', '.notification.removable', function() {
@@ -31,7 +32,7 @@ $(function() {
 
     $('#js-button-validate').on('click', function(e) {
         if (typeof  userId === 'undefined') {
-            notify('danger','T\'es pas connecté !');
+            notify('danger', 'message.alert_not_logged');
 
             return;
         }
@@ -45,9 +46,9 @@ $(function() {
         db.collection('/users').doc(userId).collection('beers').add(data).then(function() {
             $('.js-button-qty, .js-button-price').removeClass('is-outlined');
 
-            notify('success', 'Bravo ! T\'as encore bu une bière !');
+            notify('success', 'message.success_add');
         }).catch(function() {
-            notify('danger', 'Tu dois te connecter avant !');
+            notify('danger', 'message.not_logged');
         });
     });
 
@@ -62,9 +63,9 @@ $(function() {
 
     $('#js-facebook-logout').on('click', function() {
         firebase.auth().signOut().then(function() {
-            notify('success', 'Bravo t\'es déconnecté ! Champion !');
+            notify('success', 'message.success_logout');
         }).catch(function(error) {
-            notify('danger', 'Hmm... Y\'a eu une erreur pendant la déconnexion. Réssaye stp.');
+            notify('danger', 'message.error_logout');
             console.log(error);
         });
     });
@@ -79,11 +80,7 @@ $(function() {
         } else {
             $('#js-facebook-login').show();
             $('#js-facebook-logout').hide();
-
-            $('#app').prepend($('<div/>', {
-                'class': 'notification is-warning',
-                'text': 'Tu dois te connecter pour picoler. C\'est véridique hein !'
-            }));
+            $('#js-loading-history').remove();
         }
     });
 
@@ -113,19 +110,19 @@ $(function() {
 
             if (snapshot.empty) {
                 $('#js-loading-history').html($('<td/>', {
-                    text: 'Et qu\'est-ce t\'attend pour boire ?',
+                    text: translator.get('message.empty_history'),
                     colspan: 4,
-                    'class': 'has-text-centered'
+                    'class': 'has-text-centered trn'
                 }));
             }
         });
     }
 
-    function notify(type, content) {
+    function notify(type, key) {
         $('.notification.removable').remove();
         $('#app').prepend($('<div/>', {
             'class': 'notification fixed removable is-'+type,
-            'text': content
+            'text': translator.get(key)
         }).fadeOut(5000, function() {
             $(this).remove();
         }));
@@ -140,7 +137,7 @@ $(function() {
         $row
             .append($('<td/>', {text: beer.qty, 'class': 'editable qty'}))
             .append($('<td/>', {text: beer.price, 'class': 'editable price'}))
-            .append($('<td/>', {text: (new Date(beer.date)).toLocaleString()}))
+            .append($('<td/>', {text: (new Date(beer.date)).toLocaleString(localStorage.getItem('lang') || 'fr')}))
             .append($actionTd)
         ;
 
@@ -177,7 +174,7 @@ $(function() {
             newPrice = parseFloat($('.price.editable input', $row).val());
 
         if (false === validate(newQty) || false === validate(newPrice)) {
-            notify('danger', 'Prix ou quantité invalide');
+            notify('danger', 'message.invalid_data');
             return;
         }
 
@@ -202,10 +199,11 @@ $(function() {
     function addLink($container, type) {
         $('.action', $container).remove();
         $container.append($('<a/>', {
-            'class': 'action edit-' + (type === 'edit' ? 'beer' : 'done'),
+            'class': 'trn action edit-' + (type === 'edit' ? 'beer' : 'done'),
             href: '#',
-            text: (type === 'edit' ? 'Modifier' : 'Ok'),
-            'data-uid': $container.data('uid')
+            text: translator.get(type === 'edit' ? 'edit' : 'ok'),
+            'data-uid': $container.data('uid'),
+            'data-trn-key': 'edit   '
         }));
     }
 
@@ -221,4 +219,32 @@ $(function() {
     function validate(value) {
         return '' !== value && undefined !== value && null !== value && false === isNaN(value) && value > 0;
     }
+
+    /**
+     * Translation
+     */
+    function loadJSON(callback) {
+        var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+        xobj.open('GET', 'translations.json', true);
+        xobj.onreadystatechange = function () {
+            if (xobj.readyState == 4 && xobj.status == "200") {
+                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+                callback(xobj.responseText);
+            }
+        };
+        xobj.send(null);
+    }
+
+    loadJSON(function(response) {
+        let lang = localStorage.getItem('lang') || 'fr';
+        translator = $('body, head').translate({lang: lang, t: JSON.parse(response)});
+    });
+
+    $('.language-switcher').on('click', function (e) {
+        e.preventDefault();
+        let lang = $(this).data('lang');
+        translator.lang(lang);
+        localStorage.setItem('lang', lang);
+    });
 });

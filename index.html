@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Bieromètre</title>
+    <title class="trn">Beerometer</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="bulma.min.css">
@@ -11,15 +11,20 @@
 <body>
 <section class="section">
     <div id="app" class="container">
+        <div class="is-pulled-right">
+            <a href="#" class="language-switcher tag is-medium is-dark has-text-grey-light is-radiusless" data-lang="fr">fr</a><!--
+         --><a href="#" class="language-switcher tag is-medium is-dark has-text-grey-light is-radiusless" data-lang="en">en</a>
+        </div>
+
         <h1 class="title has-text-centered is-size-1">
-            Bièromètre
-            <a id="js-facebook-login" class="button is-large is-info is-pulled-left" style="display: none">Connexion</a>
-            <a id="js-facebook-logout" class="button is-large is-danger is-pulled-left" style="display: none">Déconnexion</a>
+            <span class="trn">Beerometer</span>
+            <a id="js-facebook-login" class="button is-large is-info is-pulled-left trn" style="display: none">login</a>
+            <a id="js-facebook-logout" class="button is-large is-danger is-pulled-left trn" style="display: none">logout</a>
         </h1>
 
         <div class="columns">
             <div class="column is-4">
-                <h2 class="title">Quantité</h2>
+                <h2 class="title trn">quantity</h2>
                 <div class="field">
                     <div class="control">
                         <div class="select is-primary is-large is-fullwidth">
@@ -38,7 +43,7 @@
                 </div>
             </div>
             <div class="column is-8">
-                <h2 class="title">Prix</h2>
+                <h2 class="title trn">price</h2>
                 <div class="columns">
                     <div class="column is-10 is-flex">
                         <input id="price-range" type="range" min="0" max="20" step="0.5" value="5">
@@ -53,7 +58,7 @@
         </div>
         <div class="columns">
             <div class="column">
-                <button id="js-button-validate" class="button is-large is-success is-fullwidth">Valider</button>
+                <button id="js-button-validate" class="button is-large is-success is-fullwidth trn">submit</button>
             </div>
         </div>
     </div>
@@ -63,14 +68,14 @@
     <div class="container">
         <div class="columns">
             <div class="column is-6">
-                <h2 class="title">Historique</h2>
+                <h2 class="title trn">history</h2>
                 <table class="table is-striped is-fullwidth">
                     <thead>
                         <tr>
-                            <th>Quantité (cl)</th>
-                            <th>Prix (€)</th>
-                            <th>Date</th>
-                            <th>Actions</th>
+                            <th><span class="trn">quantity</span> (cl)</th>
+                            <th><span class="trn">price</span> (€)</th>
+                            <th class="trn">date</th>
+                            <th class="trn">actions</th>
                         </tr>
                     </thead>
                     <tbody id="history-table">
@@ -112,11 +117,11 @@
                 </table>
             </div>
             <div class="column is-6">
-                <h2 class="title">Total</h2>
+                <h2 class="title trn">total</h2>
                 <div class="field is-grouped-multiline">
                     <div class="control">
                         <div class="tags has-addons">
-                            <span class="tag is-large is-dark is-size-3 tag-label is-radiusless is-marginless">Verres</span>
+                            <span class="tag is-large is-dark is-size-3 tag-label is-radiusless is-marginless trn">glasses</span>
                             <span class="tag is-large is-success is-size-3 tag-value is-radiusless is-marginless">
                                 <span id="js-total-count">0</span>
                             </span>
@@ -124,7 +129,7 @@
                     </div>
                     <div class="control">
                         <div class="tags has-addons">
-                            <span class="tag is-large is-dark is-size-3 tag-label is-radiusless is-marginless">Quantité</span>
+                            <span class="tag is-large is-dark is-size-3 tag-label is-radiusless is-marginless trn">quantity</span>
                             <span class="tag is-large is-success is-size-3 tag-value is-radiusless is-marginless">
                                 <span id="js-total-qty">0</span>cl
                             </span>
@@ -132,7 +137,7 @@
                     </div>
                     <div class="control">
                         <div class="tags has-addons">
-                            <span class="tag is-large is-dark is-size-3 tag-label is-radiusless is-marginless">Prix</span>
+                            <span class="tag is-large is-dark is-size-3 tag-label is-radiusless is-marginless trn">price</span>
                             <span class="tag is-large is-danger is-size-3 tag-value is-radiusless is-marginless">
                                 <span id="js-total-price">0</span>€
                             </span>
@@ -145,6 +150,7 @@
 </section>
 
 <script src="jquery-3.2.1.min.js"></script>
+<script src="jquery.translate.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-auth.js"></script>
